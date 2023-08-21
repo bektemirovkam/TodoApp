@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { AppText, AppTextInput, Preloader, Screen } from "./components/ui";
+import { useFonts } from "expo-font";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { customFontsToLoad } from "./theme";
 
 export default function App() {
+  const [areFontsLoaded] = useFonts(customFontsToLoad);
+
+  if (!areFontsLoaded) return null;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <Screen>
+        <ScrollView style={{ borderWidth: 2, borderColor: "blue" }}>
+          <AppText>Open up App.tsx to start working on your app!</AppText>
+          <AppText font="semiBold">
+            Open up App.tsx to start working on your app!
+          </AppText>
+
+          <AppTextInput placeholder="Text field" errorMessage="error" />
+          <Preloader />
+        </ScrollView>
+      </Screen>
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

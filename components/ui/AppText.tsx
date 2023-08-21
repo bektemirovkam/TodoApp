@@ -1,8 +1,20 @@
 import { FC } from "react";
-import { Text } from "react-native";
+import { TextProps } from "react-native";
+import styled from "styled-components/native";
+import { COLORS, typography } from "../../theme";
 
-interface AppTextProps {}
+interface AppTextProps extends TextProps {
+  font?: keyof typeof typography;
+  size?: string;
+  color?: string;
+}
 
-export const AppText: FC<AppTextProps> = ({}) => {
-  return <Text></Text>;
+const StyledText = styled.Text<AppTextProps>`
+  font-family: ${(props) => typography[props.font || "medium"]};
+  font-size: ${(props) => props.size || "16px"};
+  color: ${(props) => props.color || COLORS.mainTextBlack};
+`;
+
+export const AppText: FC<AppTextProps> = ({ children, ...props }) => {
+  return <StyledText {...props}>{children}</StyledText>;
 };
