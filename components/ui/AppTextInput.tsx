@@ -65,9 +65,11 @@ export const AppTextInput: FC<AppTextInputProps> = ({
           onChangeText={onChangeText}
           value={value}
         />
-        <ClearButton onPress={onClear}>
-          <AntDesign name="close" size={20} color={COLORS.blackLight} />
-        </ClearButton>
+        {value?.length && (
+          <ClearButton onPress={onClear}>
+            <AntDesign name="close" size={20} color={COLORS.blackLight} />
+          </ClearButton>
+        )}
       </InputView>
       {errorMessage && <AppText color={COLORS.error}>{errorMessage}</AppText>}
     </InputWrapper>

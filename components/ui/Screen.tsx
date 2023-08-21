@@ -2,7 +2,7 @@ import { FC } from "react";
 import { FlexContainer } from "./FlexContainer";
 import { Platform, ViewProps } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { Edge, useSafeAreaInsets } from "react-native-safe-area-context";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { styled } from "styled-components/native";
 
 interface ScreenProps extends ViewProps {

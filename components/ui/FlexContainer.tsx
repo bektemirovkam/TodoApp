@@ -10,8 +10,9 @@ interface FlexContainerProps {
 }
 
 export const FlexContainer = styled.View<FlexContainerProps>`
+  width: 100%;
   flex: ${(props) => props.flex || 1};
-  align-items: ${(props) => props.alignItems || "flex-start"};
+  align-items: ${(props) => props.alignItems || "stretch"};
   justify-content: ${(props) => props.justifyContent || "flex-start"};
   padding-left: ${(props) => props.insets?.left || 0}px;
   padding-right: ${(props) => props.insets?.right || 0}px;
