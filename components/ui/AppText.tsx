@@ -7,12 +7,14 @@ interface AppTextProps extends TextProps {
   font?: keyof typeof typography;
   size?: string;
   color?: string;
+  flex?: number;
 }
 
 const StyledText = styled.Text<AppTextProps>`
   font-family: ${(props) => typography[props.font || "medium"]};
   font-size: ${(props) => props.size || "16px"};
   color: ${(props) => props.color || COLORS.mainTextBlack};
+  flex: ${(props) => props.flex || 0};
 `;
 
 export const AppText: FC<AppTextProps> = ({ children, ...props }) => {

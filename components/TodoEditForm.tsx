@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { FlexContainer } from "./ui/FlexContainer";
-import { AppButton, AppText, AppTextInput, Title } from "./ui";
+import { AppBox, AppButton, AppTextInput, Title } from "./ui";
 import styled from "styled-components/native";
 import { COLORS, spacing } from "../theme";
 import { TextStyle } from "react-native";
@@ -10,7 +10,7 @@ import { Todo } from "../context/TodoContext";
 interface TodoEditFormProps {
   mode?: "editing" | "creating";
   onBack: () => void;
-  onSave: () => void;
+  onSave: (todoData: Todo) => void;
   initialData?: Todo;
 }
 
@@ -42,12 +42,38 @@ export const TodoEditForm: FC<TodoEditFormProps> = ({
 }) => {
   const [formData, setFormData] = useState(initialData || defaultData);
 
+  const handleSave = () => {
+    onSave(formData);
+    onBack();
+  };
+
+  const hasChanges = () => {
+    if (mode === "editing" && initialData) {
+      return (
+        initialData.text !== formData.text &&
+        initialData.title !== formData.title
+      );
+    } else {
+      return !formData.text && !formData.title;
+    }
+  };
+
   return (
     <FlexContainer>
       <Header>
-        <AppButton onPress={onBack}>
-          <Ionicons name="arrow-back" size={24} color={COLORS.mainTextBlack} />
-        </AppButton>
+        {hasChanges() ? (
+          <AppButton onPress={onBack}>
+            <Ionicons
+              name="arrow-back"
+              size={24}
+              color={COLORS.mainTextBlack}
+            />
+          </AppButton>
+        ) : (
+          <AppButton onPress={handleSave}>
+            <Ionicons name="save" size={24} color={COLORS.mainBlue} />
+          </AppButton>
+        )}
 
         <Title>{mode === "creating" ? "Создание" : "Редактирование"}</Title>
 
@@ -58,19 +84,21 @@ export const TodoEditForm: FC<TodoEditFormProps> = ({
         )}
       </Header>
 
-      <AppTextInput
-        placeholder="Заголовок заметки"
-        margin={`0 0 ${spacing.medium}px 0`}
-        value={formData.title}
-        onChangeText={(v) => setFormData((prev) => ({ ...prev, title: v }))}
-      />
-      <TextArea
-        placeholder="Текст заметки"
-        multiline
-        style={textAreaStyle}
-        value={formData.text}
-        onChangeText={(v) => setFormData((prev) => ({ ...prev, text: v }))}
-      />
+      <AppBox>
+        <AppTextInput
+          placeholder="Заголовок заметки"
+          margin={`0 0 ${spacing.medium}px 0`}
+          value={formData.title}
+          onChangeText={(v) => setFormData((prev) => ({ ...prev, title: v }))}
+        />
+        <TextArea
+          placeholder="Текст заметки"
+          multiline
+          style={textAreaStyle}
+          value={formData.text}
+          onChangeText={(v) => setFormData((prev) => ({ ...prev, text: v }))}
+        />
+      </AppBox>
     </FlexContainer>
   );
 };
