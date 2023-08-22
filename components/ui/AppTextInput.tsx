@@ -3,25 +3,31 @@ import { TextInputProps } from "react-native";
 import styled from "styled-components/native";
 import { AntDesign } from "@expo/vector-icons";
 import { AppText } from "./AppText";
-import { COLORS, typography } from "../../theme";
+import { COLORS, spacing, typography } from "../../theme";
 import { AppButton } from "./AppButton";
 
 interface AppTextInputProps extends TextInputProps {
   errorMessage?: string;
   placeholder?: string;
+  padding?: string;
+  margin?: string;
 }
 
-const InputView = styled.View``;
+export const InputView = styled.View`
+  margin-top: ${spacing.extraSmall}px;
+`;
 
-const InputWrapper = styled.View`
+const InputWrapper = styled.View<AppTextInputProps>`
   position: "relative";
   width: 100%;
   border-radius: 8px;
+  padding: ${(props) => props.padding || `0px`};
+  margin: ${(props) => props.margin || `0px`};
 `;
 
 const TextInput = styled.TextInput<AppTextInputProps>`
   height: 44px;
-  padding: 0 55px 0 10px;
+  padding: 0 55px 0 15px;
   width: 100%;
   color: ${COLORS.blackLight};
   font-family: ${typography.medium};
@@ -47,6 +53,8 @@ export const AppTextInput: FC<AppTextInputProps> = ({
   errorMessage,
   onChangeText,
   value,
+  margin,
+  padding,
   ...props
 }) => {
   const onClear = () => {
@@ -56,7 +64,7 @@ export const AppTextInput: FC<AppTextInputProps> = ({
   };
 
   return (
-    <InputWrapper>
+    <InputWrapper margin={margin} padding={padding}>
       {placeholder && <AppText>{placeholder}</AppText>}
       <InputView>
         <TextInput

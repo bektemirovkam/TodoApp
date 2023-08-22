@@ -10,7 +10,7 @@ export const HomeScreen: FC<
 > = ({ navigation }) => {
   return (
     <Screen>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <TodoEditForm />
       </ScrollView>
     </Screen>
