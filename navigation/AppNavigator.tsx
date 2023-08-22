@@ -3,11 +3,11 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from "@react-navigation/native-stack";
-import { HomeScreen, TodoDetailsScreen } from "../screens";
+import { HomeScreen, TodoFormScreen } from "../screens";
 
 export type AppStackParamList = {
   Home: undefined;
-  TodoDetails: { todoId: string };
+  TodoForm: { todoId: string } | undefined;
 };
 
 const screenOptions: NativeStackNavigationOptions = {
@@ -20,7 +20,7 @@ const AppStack = () => {
   return (
     <Stack.Navigator screenOptions={screenOptions}>
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="TodoDetails" component={TodoDetailsScreen} />
+      <Stack.Screen name="TodoForm" component={TodoFormScreen} />
     </Stack.Navigator>
   );
 };

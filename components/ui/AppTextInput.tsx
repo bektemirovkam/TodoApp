@@ -65,7 +65,7 @@ export const AppTextInput: FC<AppTextInputProps> = ({
 
   return (
     <InputWrapper margin={margin} padding={padding}>
-      {placeholder && <AppText>{placeholder}</AppText>}
+      {placeholder ? <AppText>{placeholder}</AppText> : null}
       <InputView>
         <TextInput
           {...props}
@@ -73,13 +73,15 @@ export const AppTextInput: FC<AppTextInputProps> = ({
           onChangeText={onChangeText}
           value={value}
         />
-        {value?.length && (
+        {value?.length ? (
           <ClearButton onPress={onClear}>
             <AntDesign name="close" size={20} color={COLORS.blackLight} />
           </ClearButton>
-        )}
+        ) : null}
       </InputView>
-      {errorMessage && <AppText color={COLORS.error}>{errorMessage}</AppText>}
+      {errorMessage ? (
+        <AppText color={COLORS.error}>{errorMessage}</AppText>
+      ) : undefined}
     </InputWrapper>
   );
 };

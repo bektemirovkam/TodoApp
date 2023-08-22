@@ -18,3 +18,10 @@ const StyledText = styled.Text<AppTextProps>`
 export const AppText: FC<AppTextProps> = ({ children, ...props }) => {
   return <StyledText {...props}>{children}</StyledText>;
 };
+
+export const Title = styled(AppText)`
+  text-align: center;
+  flex: 1;
+  font-size: 24px;
+  font-family: ${typography.semiBold};
+`;
