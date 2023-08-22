@@ -3,7 +3,7 @@ import { FlexContainer } from "./ui/FlexContainer";
 import { AppBox, AppButton, AppTextInput, Title } from "./ui";
 import styled from "styled-components/native";
 import { COLORS, spacing } from "../theme";
-import { TextStyle } from "react-native";
+import { Alert, TextStyle } from "react-native";
 import { Ionicons, AntDesign } from "@expo/vector-icons";
 import { Todo } from "../context/TodoContext";
 
@@ -11,6 +11,8 @@ interface TodoEditFormProps {
   mode?: "editing" | "creating";
   onBack: () => void;
   onSave: (todoData: Todo) => void;
+  onDelete: (todoData: Todo) => void;
+  onEdit: (todoData: Todo) => void;
   initialData?: Todo;
 }
 
@@ -28,30 +30,56 @@ const TextArea = styled(AppTextInput)`
   padding-bottom: ${spacing.extraSmall}px;
 `;
 
-const defaultData = {
-  title: "",
-  text: "",
-  uid: new Date().toString(),
-};
-
 export const TodoEditForm: FC<TodoEditFormProps> = ({
   mode = "creating",
   onBack,
   onSave,
+  onDelete,
+  onEdit,
   initialData,
 }) => {
-  const [formData, setFormData] = useState(initialData || defaultData);
+  const [formData, setFormData] = useState(
+    initialData || {
+      title: "",
+      text: "",
+      uid: new Date().toString(),
+    }
+  );
 
   const handleSave = () => {
-    onSave(formData);
+    if (mode === "editing") {
+      onEdit(formData);
+    } else {
+      onSave(formData);
+    }
+
     onBack();
+  };
+
+  const handleDelete = () => {
+    if (initialData) {
+      Alert.alert("", "Вы уверены что хотите удалить запись?", [
+        {
+          text: "Нет",
+          onPress: () => null,
+          style: "cancel",
+        },
+        {
+          text: "Да",
+          onPress: () => {
+            onDelete(initialData);
+            onBack();
+          },
+        },
+      ]);
+    }
   };
 
   const hasChanges = () => {
     if (mode === "editing" && initialData) {
       return (
-        initialData.text !== formData.text &&
-        initialData.title !== formData.title
+        initialData.text === formData.text &&
+        initialData.title === formData.title
       );
     } else {
       return !formData.text && !formData.title;
@@ -63,11 +91,7 @@ export const TodoEditForm: FC<TodoEditFormProps> = ({
       <Header>
         {hasChanges() ? (
           <AppButton onPress={onBack}>
-            <Ionicons
-              name="arrow-back"
-              size={24}
-              color={COLORS.mainTextBlack}
-            />
+            <Ionicons name="arrow-back" size={24} color={COLORS.mainBlue} />
           </AppButton>
         ) : (
           <AppButton onPress={handleSave}>
@@ -78,7 +102,7 @@ export const TodoEditForm: FC<TodoEditFormProps> = ({
         <Title>{mode === "creating" ? "Создание" : "Редактирование"}</Title>
 
         {mode === "editing" && (
-          <AppButton onPress={onBack}>
+          <AppButton onPress={handleDelete}>
             <AntDesign name="delete" size={24} color={COLORS.error} />
           </AppButton>
         )}

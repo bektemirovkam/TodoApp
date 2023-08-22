@@ -22,6 +22,14 @@ export const TodoFormScreen: FC<
     dispatch({ type: "ADD_TODO", payload: formData });
   };
 
+  const onDelete = (todo: Todo) => {
+    dispatch({ type: "DELETE_TODO", payload: todo.uid });
+  };
+
+  const onEdit = (todo: Todo) => {
+    dispatch({ type: "EDIT_TODO", payload: todo });
+  };
+
   return (
     <Screen>
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -29,6 +37,8 @@ export const TodoFormScreen: FC<
           mode={todo ? "editing" : "creating"}
           onBack={goBack}
           onSave={onSave}
+          onDelete={onDelete}
+          onEdit={onEdit}
           initialData={todo}
         />
       </ScrollView>

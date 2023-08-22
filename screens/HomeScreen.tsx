@@ -2,12 +2,12 @@ import { FC, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AppStackParamList } from "../navigation/AppNavigator";
-import { AppButton, Screen } from "../components/ui";
+import { AppButton, AppText, Screen } from "../components/ui";
 import { TodoList } from "../components";
-import { Todo } from "../context/TodoContext";
+import { Todo, useTodoContext } from "../context/TodoContext";
 import { styled } from "styled-components/native";
 import { AntDesign } from "@expo/vector-icons";
-import { spacing } from "../theme";
+import { COLORS, spacing } from "../theme";
 
 const AddButton = styled(AppButton)<{ decreaseBtnOpacity: boolean }>`
   position: absolute;
@@ -54,7 +54,7 @@ export const HomeScreen: FC<
         decreaseBtnOpacity={decreaseBtnOpacity}
         style={addBtnShadow}
       >
-        <AntDesign name="pluscircleo" size={48} color="black" />
+        <AntDesign name="pluscircleo" size={48} color={COLORS.mainBlue} />
       </AddButton>
     </Screen>
   );

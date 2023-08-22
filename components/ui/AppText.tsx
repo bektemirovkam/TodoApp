@@ -26,4 +26,5 @@ export const Title = styled(AppText)`
   flex: 1;
   font-size: 24px;
   font-family: ${typography.semiBold};
+  color: ${COLORS.mainBlue};
 `;

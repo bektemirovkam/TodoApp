@@ -17,17 +17,17 @@ const ListTitle = styled(Title)`
 export const TodoList: FC<TodoListProps> = memo(({ onTodoPress }) => {
   const { state } = useTodoContext();
 
-  console.log("state.todos ---> ", state.todos);
-
   return (
     <FlexContainer>
       <ListTitle>Список заметок</ListTitle>
       <FlexContainer>
-        <AppBox flex={1}>
-          {state.todos.map((t) => (
-            <TodoItem todo={t} onPress={onTodoPress} key={t.uid} />
-          ))}
-        </AppBox>
+        {state.todos.length ? (
+          <AppBox flex={1}>
+            {state.todos.map((t) => (
+              <TodoItem todo={t} onPress={onTodoPress} key={t.uid} />
+            ))}
+          </AppBox>
+        ) : null}
       </FlexContainer>
     </FlexContainer>
   );
